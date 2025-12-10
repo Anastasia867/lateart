@@ -1,14 +1,7 @@
 <?php
-$host = "localhost"; 
-$user = "root";       
-$pass = "";           
-$db = "lateart_db";   
-
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli("localhost", "root", "", "lateart_db");
 
 if ($conn->connect_error) {
-  die("Помилка підключення: " . $conn->connect_error);
-} else {
-  echo "Успішне підключення до бази даних!";
+    die("Помилка підключення: " . $conn->connect_error);
 }
 ?>

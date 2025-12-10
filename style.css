@@ -1,0 +1,1225 @@
+/* RESET + STRUCTURE FIX */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+:root {
+  --card-bg: #1e1d2b;
+  --card-border: rgba(255, 255, 255, 0.12);
+  --input-bg: #2a2838;
+  --input-border: rgba(255, 255, 255, 0.25);
+  --primary: #7a4bff;
+  --primary-dark: #4d2ccc;
+  --secondary: #f2f0ff;
+  --text: #1f1f1f;
+  --muted: #6f6f7b;
+  --bg: #ffffff;
+  --accent: #ffb347;
+
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --shadow-soft: 0 12px 34px rgba(30, 30, 60, 0.08);
+  --shadow-strong: 0 18px 44px rgba(30, 30, 60, 0.12);
+
+  font-size: 16px;
+}
+
+/* ===============================
+   1. БАЗА
+=================================*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-top: 80px; /* під фіксований хедер */
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  border-radius: 18px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ===============================
+   2. ХЕДЕР / НАВІГАЦІЯ
+=================================*/
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 14px 22px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  color: var(--text);
+  z-index: 3000;
+  transition: top 0.35s ease;
+}
+
+.top-nav--hidden {
+  top: -90px;
+}
+
+.logo {
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: clamp(16px, 3vw, 40px);
+  align-items: center;
+}
+
+.nav-links a {
+  font-weight: 600;
+  color: var(--text);
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--primary);
+}
+
+/* Кнопка кошика */
+.cart-link {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #fff;
+  background: linear-gradient(90deg, #0f0b1f 0%, #24175a 45%, #412195 100%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-link:hover,
+.cart-link:focus {
+  filter: brightness(1.08);
+}
+
+/* Бейдж */
+.cart-badge {
+  display: none;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #ff9a9e 0%, #fad0c4 100%);
+  color: #0d0c1d;
+  font-size: 12px;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Бургер */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  width: 24px;
+  height: 2px;
+  background: #1f1f1f;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ===============================
+   3. ХЕРО / ГОЛОВНА
+=================================*/
+.hero {
+  margin-top: 16px;
+  padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 96px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+  background: linear-gradient(
+    180deg,
+    rgba(122, 75, 255, 0.07),
+    rgba(255, 179, 71, 0.1)
+  );
+}
+
+.hero-content h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.hero-content p {
+  color: var(--muted);
+  margin-top: 16px;
+  max-width: 520px;
+}
+
+.hero-media img {
+  border-radius: 32px;
+  box-shadow: var(--shadow-strong);
+}
+
+.hero-actions {
+  margin-top: 32px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   4. КНОПКИ
+=================================*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    filter 0.2s ease;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(122, 75, 255, 0.25);
+}
+
+.btn.primary:hover,
+.btn.primary:focus {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  background: #fff;
+  color: var(--primary);
+  border: 1px solid rgba(122, 75, 255, 0.2);
+}
+
+.btn.secondary:hover,
+.btn.secondary:focus {
+  background: var(--secondary);
+}
+
+.btn.tertiary {
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: rgba(122, 75, 255, 0.12);
+  color: var(--primary);
+}
+
+.btn.tertiary:hover,
+.btn.tertiary:focus {
+  background: rgba(122, 75, 255, 0.2);
+}
+
+/* ===============================
+   5. СЕКЦІЇ / ГРИДИ
+=================================*/
+.section {
+  padding: clamp(64px, 8vw, 120px) clamp(16px, 5vw, 96px);
+}
+
+.section-header {
+  max-width: 640px;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin-bottom: 12px;
+}
+
+.section-header p {
+  color: var(--muted);
+}
+
+.about-grid,
+.card-grid,
+.info-grid {
+  display: grid;
+  gap: clamp(24px, 4vw, 40px);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* Карточки */
+.about-card,
+.info-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(122, 75, 255, 0.08);
+}
+
+/* Спецпропозиції */
+#specials.section {
+  background: linear-gradient(
+    180deg,
+    rgba(122, 75, 255, 0.07),
+    rgba(255, 179, 71, 0.1)
+  );
+}
+
+.card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.menu-card {
+  background: #fff;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 18px 40px rgba(30, 30, 60, 0.12);
+}
+
+.menu-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.menu-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-tag {
+  background: rgba(122, 75, 255, 0.14);
+  color: var(--primary);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+.menu-card h3 {
+  font-size: 1.4rem;
+}
+
+.menu-card p {
+  color: var(--muted);
+}
+
+.menu-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ===============================
+   6. EXPERIENCE
+=================================*/
+.experience {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 179, 71, 0.15),
+    rgba(122, 75, 255, 0.15)
+  );
+  padding: clamp(48px, 7vw, 96px);
+}
+
+.experience-media img {
+  width: 100%;
+  border-radius: 32px;
+}
+
+.feature-list {
+  list-style: none;
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.feature-list li::before {
+  content: "☕";
+  margin-right: 12px;
+}
+
+/* ===============================
+   7. КОНТАКТИ
+=================================*/
+.contact {
+  background: #faf9ff;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(24px, 4vw, 40px);
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-strong);
+}
+
+.contact-form {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-strong);
+  display: grid;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  font-weight: 600;
+}
+
+input,
+textarea,
+select {
+  border: 1px solid rgba(31, 31, 31, 0.1);
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(122, 75, 255, 0.15);
+}
+
+.order-fields {
+  display: grid;
+  gap: 16px;
+}
+
+/* ===============================
+   8. МЕНЮ (menu.php)
+=================================*/
+.menu-page {
+  padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 96px) clamp(64px, 8vw, 120px);
+  display: grid;
+  gap: clamp(40px, 7vw, 72px);
+  background: linear-gradient(
+    180deg,
+    rgba(122, 75, 255, 0.07),
+    rgba(255, 179, 71, 0.1)
+  );
+}
+
+.menu-hero {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menu-hero h1 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.menu-hero p {
+  color: var(--muted);
+}
+
+.menu-section {
+  display: grid;
+  gap: 32px;
+}
+
+.menu-list {
+  display: grid;
+  gap: 24px;
+}
+
+.menu-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(122, 75, 255, 0.08);
+}
+
+.menu-item figure {
+  width: 140px;
+  height: 110px;
+  overflow: hidden;
+  border-radius: 18px;
+  margin: 0;
+}
+
+.menu-item figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menu-item h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.menu-item p {
+  color: var(--muted);
+}
+
+.menu-item .menu-cta {
+  display: grid;
+  gap: 12px;
+  justify-items: end;
+}
+
+.menu-item .price {
+  font-size: 1.1rem;
+}
+
+/* ===============================
+   9. CART PAGE
+=================================*/
+.cart-page {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 64px);
+  padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 96px);
+  background: #f7f6fb;
+}
+
+.cart-items {
+  display: grid;
+  gap: 24px;
+}
+
+.cart-header-area {
+  margin-bottom: 8px;
+}
+
+.cart-header-area h1,
+.cart-page h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.cart-header-area p,
+.cart-subtitle {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+/* Карточка в кошику */
+.cart-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 18px 24px;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+}
+
+.cart-card-info h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.cart-price,
+.cart-sum {
+  margin: 3px 0;
+  font-size: 15px;
+}
+
+/* Контролери кількості */
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  background: #6a4df1;
+  color: #fff;
+  border: none;
+  padding: 6px 13px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.qty-btn:hover {
+  background: #5534d4;
+}
+
+.minus-btn {
+  background: #d9534f !important;
+}
+
+.minus-btn:hover {
+  background: #c0392b !important;
+}
+
+.delete-btn {
+  background: #ff3b3b;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #c72929;
+}
+
+.qty-number {
+  font-size: 20px;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Порожній кошик */
+.cart-empty-block {
+  text-align: center;
+  padding: 30px 0;
+  opacity: 0.75;
+}
+
+.empty-text {
+  font-size: 21px;
+  font-weight: 600;
+}
+
+/* Загальна сума */
+.cart-total-block {
+  margin-top: 25px;
+}
+
+.total-text {
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.total-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: #6a4df1;
+}
+
+/* Правий блок */
+.cart-summary {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px;
+  display: grid;
+  gap: 16px;
+  align-self: start;
+  box-shadow: var(--shadow-strong);
+}
+
+/* Підсумок */
+.summary-row,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-total span:last-child {
+  font-size: 1.4rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ===============================
+   10. ORDER PAGE
+=================================*/
+.order-cart-block {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-bottom: 32px;
+}
+
+.order-cart-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.order-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: #f7f7fb;
+  margin-bottom: 14px;
+  border: 1px solid #ececf5;
+}
+
+.order-item-info h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.order-item-info p {
+  margin: 2px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.order-item-sum {
+  font-size: 18px;
+  font-weight: 700;
+  color: #412195;
+}
+
+.order-total-box {
+  margin-top: 20px;
+  padding: 16px;
+  background: linear-gradient(90deg, #0f0b1f, #24175a, #412195);
+  color: #fff;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.order-total-box p {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.order-total-box h3 {
+  margin: 6px 0 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.empty-order-text {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+/* ===============================
+   11. DELIVERY INFO
+=================================*/
+.delivery-info {
+  padding: clamp(48px, 7vw, 96px) clamp(16px, 5vw, 96px) clamp(72px, 9vw, 120px);
+  background: #faf9ff;
+  display: grid;
+  gap: 32px;
+}
+
+/* ===============================
+   12. ФУТЕР
+=================================*/
+.footer {
+  padding: 24px clamp(16px, 5vw, 72px);
+  background: #0b0b13;
+  color: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   13. АДАПТИВ
+=================================*/
+@media (max-width: 960px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 80px;
+    right: clamp(16px, 5vw, 72px);
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 24px 40px rgba(30, 30, 60, 0.16);
+    flex-direction: column;
+    gap: 16px;
+    min-width: 220px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+
+  .cart-page {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    text-align: center;
+  }
+
+  .hero-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 540px) {
+  :root {
+    font-size: 15px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cart-summary,
+  .contact-form,
+  .contact-card,
+  .order-cart-block {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .order-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 18px;
+  }
+
+  .order-item-sum {
+    align-self: flex-end;
+  }
+}
+/* Кнопка кошика в світлій темі */
+.cart-link {
+  background: linear-gradient(90deg, #6a4df1, #8b6df6);
+  color: #ffffff !important;
+  border-radius: 12px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.cart-badge {
+  background: #ffffff;
+  color: #6a4df1;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 2px 7px;
+}
+/* Кнопка "Очистити кошик" */
+
+.clear-cart-btn:active {
+  transform: scale(0.97);
+}
+
+.clear-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  color: #6a4df1;
+  border: 1px solid rgba(106, 77, 241, 0.3);
+
+  padding: 12px 20px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: 0.25s ease;
+  font-size: 1rem;
+
+  box-shadow: 0 6px 20px rgba(106, 77, 241, 0.15);
+}
+
+.clear-cart-btn:hover {
+  background: #f7f4ff;
+  border-color: rgba(106, 77, 241, 0.5);
+  transform: translateY(-2px);
+}
+
+/* ===============================
+      2. ХЕДЕР
+=================================*/
+body.dark-theme {
+  --bg: #0f0e17;
+  --text: #f4f4fa;
+  --muted: #9b9bb2;
+  --card-bg: #1a1926;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --input-bg: #1f1e2d;
+  --input-border: rgba(255, 255, 255, 0.15);
+}
+body.dark-theme .top-nav {
+  background: linear-gradient(90deg, #0f0b1f, #24175a, #412195);
+  color: #fff;
+}
+
+body.dark-theme .nav-links a {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.dark-theme .nav-links a:hover {
+  color: #ffffff !important;
+}
+
+/* ===============================
+      3. CART PAGE
+=================================*/
+
+body.dark-theme .cart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: #ffffff;
+}
+
+body.dark-theme .cart-summary {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+body.dark-theme .cart-price,
+body.dark-theme .cart-sum {
+  color: var(--muted);
+}
+
+/* ===============================
+      4. ORDER PAGE
+=================================*/
+
+body.dark-theme .order-cart-block {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: #ffffff;
+}
+
+body.dark-theme .order-item-card {
+  background: #242235;
+  border: 1px solid var(--card-border);
+}
+
+body.dark-theme .order-item-info h3,
+body.dark-theme .order-item-info p {
+  color: #e8e5ff;
+}
+
+body.dark-theme .order-item-sum {
+  color: #d4c8ff;
+}
+
+/* ===============================
+      5. MENU CARDS
+=================================*/
+
+body.dark-theme .menu-card p {
+  color: var(--muted);
+}
+
+/* ===============================
+      6. CONTACT FORM
+=================================*/
+
+body.dark-theme .contact {
+  background: #151423;
+}
+
+body.dark-theme .contact-card,
+body.dark-theme .contact-form {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: #ffffff;
+}
+
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: #ffffff;
+}
+
+/* ===============================
+      7. FOOTER
+=================================*/
+
+body.dark-theme .footer {
+  background: #08070f;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+body.dark-theme .footer a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===============================
+      8. CART BUTTON
+=================================*/
+
+body.dark-theme .cart-link {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff !important;
+}
+
+body.dark-theme .cart-badge {
+  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+  color: #000;
+}
+
+/* ===============================
+      9. PAGE BACKGROUND
+=================================*/
+
+body.dark-theme main,
+body.dark-theme .section {
+  background: linear-gradient(
+    180deg,
+    rgba(122, 75, 255, 0.06),
+    rgba(255, 179, 71, 0.05)
+  );
+}
+
+/* ===============================
+      10. FIX BLACK TEXT
+=================================*/
+
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme p,
+body.dark-theme label {
+  color: #ffffff;
+}
+
+body.dark-theme .about-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: #ffffff;
+}
+
+body.dark-theme .about-card h3 {
+  color: #ffffff;
+}
+
+body.dark-theme .about-card p {
+  color: #d1cfff;
+}
+
+body.dark-theme .about {
+  background: linear-gradient(
+    180deg,
+    rgba(122, 75, 255, 0.05),
+    rgba(255, 179, 71, 0.05)
+  );
+}
+
+body.dark-theme .menu-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: #ffffff;
+}
+
+body.dark-theme .menu-card h3 {
+  color: #ffffff;
+}
+
+body.dark-theme .menu-card p {
+  color: #d1cfff;
+}
+
+body.dark-theme .menu-tag {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+body.dark-theme .menu-card .price {
+  color: #f5f3ff;
+}
+
+/* ===============================
+   DARK THEME — MENU PAGE (menu.php)
+=================================*/
+
+body.dark-theme .menu-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: #fff;
+}
+
+body.dark-theme .menu-item h3 {
+  color: #fff;
+}
+
+body.dark-theme .menu-item p {
+  color: #cfcde9;
+}
+
+body.dark-theme .menu-item .price {
+  color: #f2eeff;
+  font-weight: 600;
+}
+
+body.dark-theme .menu-item figure {
+  background: #1f1e2d;
+}
+
+body.dark-theme .menu-item figure img {
+  opacity: 0.9;
+}
+
+body.dark-theme .menu-hero h1 {
+  color: #fff;
+}
+
+body.dark-theme .menu-hero p {
+  color: #cfcde9;
+}
+
+body.dark-theme .menu-section .section-header h2 {
+  color: #fff;
+}
+
+body.dark-theme .menu-section .section-header p {
+  color: #cfcde9;
+}
+
+body.dark-theme .add-btn {
+  background: linear-gradient(90deg, #6a4df1, #412195);
+  color: #fff !important;
+  border: none;
+}
+
+body.dark-theme .add-btn:hover {
+  background: linear-gradient(90deg, #5534d4, #2e1570);
+}
+
+body.dark-theme .clear-cart-btn {
+  background: linear-gradient(90deg, #7a4df1, #9d72ff);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 20px rgba(122, 75, 255, 0.35);
+}
+
+body.dark-theme .clear-cart-btn:hover {
+  background: linear-gradient(90deg, #8b5cff, #b28cff);
+  transform: translateY(-2px);
+}

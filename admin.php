@@ -22,6 +22,9 @@ $pdo = new PDO($dsn, $user, $pass, [
 // Отримуємо всі замовлення
 $stmt = $pdo->query("SELECT * FROM orders ORDER BY created_at DESC");
 $orders = $stmt->fetchAll();
+
+// Лічильник повідомлень
+$msgCount = $pdo->query("SELECT COUNT(*) FROM messages")->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="uk">
@@ -30,12 +33,62 @@ $orders = $stmt->fetchAll();
     <title>Адмін — Замовлення</title>
 
 <style>
-table { width:100%; border-collapse: collapse; margin-top:20px;}
-th,td { padding:12px; border-bottom:1px solid #ccc; vertical-align: top;}
-th { background:#eee; }
-pre { background:#f7f7f7; padding:8px; border-radius:6px; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
 
-/* Бейджі статусів */
+/* Навігація */
+.admin-nav {
+    margin-bottom: 20px;
+    background: #f3f3f3;
+    padding: 12px;
+    border-radius: 6px;
+}
+.admin-nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+}
+.admin-nav a:hover {
+    color: #000;
+}
+
+/* Червоний бейдж */
+.msg-badge {
+    background: #e53935;
+    padding: 3px 7px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #fff;
+}
+
+/* Таблиця */
+table { 
+    width:100%; 
+    border-collapse: collapse; 
+    margin-top:20px;
+}
+th,td { 
+    padding:12px; 
+    border-bottom:1px solid #ccc; 
+    vertical-align: top;
+}
+th { 
+    background:#eee; 
+}
+
+/* JSON поле */
+pre { 
+    background:#f7f7f7; 
+    padding:8px; 
+    border-radius:6px; 
+    max-width:300px; 
+    white-space: pre-wrap;
+}
+
+/* Бейдж статусів */
 .status {
     padding: 6px 12px;
     border-radius: 6px;
@@ -49,37 +102,42 @@ pre { background:#f7f7f7; padding:8px; border-radius:6px; }
 .status-done { background:#4caf50; }
 .status-cancel { background:#e53935; }
 
-/* Кнопки зміни статусів */
+/* Кнопки дій */
 .action-btn {
     padding: 5px 10px;
     border-radius: 5px;
-    text-decoration: none;
     color:white;
     font-size: 13px;
+    text-decoration: none;
     margin-right:4px;
 }
 .btn-new { background:#007bff; }
 .btn-work { background:#ff9800; }
 .btn-done { background:#4caf50; }
 .btn-cancel { background:#e53935; }
-.btn-delete {
-    background: #000;
-}
-.btn-delete:hover {
-    opacity: 0.8;
-}
-
+.btn-delete { background:#000; }
 .action-btn:hover { opacity:0.8; }
 </style>
 </head>
+
 <body>
 
 <h2>Адмін-панель — Замовлення</h2>
 
-<p>
-Ви увійшли як <strong><?= $_SESSION["admin_username"] ?></strong>
- | <a href="logout.php">Вийти</a>
-</p>
+<nav class="admin-nav">
+    Ви увійшли як <strong><?= $_SESSION["admin_username"] ?></strong> |
+
+    <a href="admin.php">Замовлення</a>
+
+    <a href="admin_messages.php">
+        Повідомлення клієнтів
+        <?php if ($msgCount > 0): ?>
+            <span class="msg-badge"><?= $msgCount ?></span>
+        <?php endif; ?>
+    </a>
+
+    <a href="logout.php">Вийти</a>
+</nav>
 
 <table>
 <tr>
@@ -96,9 +154,8 @@ pre { background:#f7f7f7; padding:8px; border-radius:6px; }
     <th>Дата</th>
 </tr>
 
-<?php foreach ($orders as $o): 
-    $items = json_decode($o["items"], true);
-?>
+<?php foreach ($orders as $o): ?>
+<?php $items = json_decode($o["items"], true) ?: []; ?>
 <tr>
     <td><?= $o["id"] ?></td>
     <td><?= htmlspecialchars($o["name"]) ?></td>
@@ -109,11 +166,12 @@ pre { background:#f7f7f7; padding:8px; border-radius:6px; }
 
     <td><pre><?= json_encode($items, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?></pre></td>
 
-    <td><?= $o["total_amount"] ?> грн</td>
+    <td><?= number_format($o["total_amount"], 2) ?> грн</td>
 
     <td>
         <?php
-        echo match ($o["status"]) {
+        $status = $o["status"] ?? "new"; // Уникнення warning
+        echo match ($status) {
             "new"    => "<span class='status status-new'>Нове</span>",
             "work"   => "<span class='status status-work'>В роботі</span>",
             "done"   => "<span class='status status-done'>Виконано</span>",
@@ -124,15 +182,15 @@ pre { background:#f7f7f7; padding:8px; border-radius:6px; }
     </td>
 
     <td>
-        <a class="action-btn btn-new" href="update_status.php?id=<?= $o['id'] ?>&s=new">Нове</a>
-        <a class="action-btn btn-work" href="update_status.php?id=<?= $o['id'] ?>&s=work">В роботі</a>
-        <a class="action-btn btn-done" href="update_status.php?id=<?= $o['id'] ?>&s=done">Готово</a>
+        <a class="action-btn btn-new"    href="update_status.php?id=<?= $o['id'] ?>&s=new">Нове</a>
+        <a class="action-btn btn-work"   href="update_status.php?id=<?= $o['id'] ?>&s=work">В роботі</a>
+        <a class="action-btn btn-done"   href="update_status.php?id=<?= $o['id'] ?>&s=done">Готово</a>
         <a class="action-btn btn-cancel" href="update_status.php?id=<?= $o['id'] ?>&s=cancel">Скасувати</a>
         <a class="action-btn btn-delete" 
-       href="delete_order.php?id=<?= $o['id'] ?>" 
-       onclick="return confirm('Точно видалити це замовлення?')">
-       Видалити
-         </a>
+           href="delete_order.php?id=<?= $o['id'] ?>" 
+           onclick="return confirm('Точно видалити це замовлення?')">
+           Видалити
+        </a>
     </td>
 
     <td><?= $o["created_at"] ?></td>
@@ -143,4 +201,3 @@ pre { background:#f7f7f7; padding:8px; border-radius:6px; }
 
 </body>
 </html>
-

@@ -1,5 +1,5 @@
-// 🌟 Мобільне меню
 document.addEventListener("DOMContentLoaded", () => {
+  // 🌟 Мобільне меню
   const navToggle = document.querySelector(".nav-toggle");
   const nav = document.querySelector(".nav-links");
 
@@ -9,90 +9,143 @@ document.addEventListener("DOMContentLoaded", () => {
       navToggle.classList.toggle("active");
     });
   }
-});
 
-// 🌟 Ховаємо хедер при скролі вниз
-let lastY = 0;
-const header = document.querySelector(".top-nav");
+  // 🌟 Ховаємо хедер при скролі
+  let lastY = 0;
+  const header = document.querySelector(".top-nav");
 
-window.addEventListener("scroll", () => {
-  const y = window.scrollY;
+  window.addEventListener("scroll", () => {
+    const y = window.scrollY;
+    if (y > lastY && y > 80) {
+      header.classList.add("top-nav--hidden");
+    } else {
+      header.classList.remove("top-nav--hidden");
+    }
+    lastY = y;
+  });
 
-  if (y > lastY && y > 80) {
-    header.classList.add("top-nav--hidden");
-  } else {
-    header.classList.remove("top-nav--hidden");
-  }
-
-  lastY = y;
-});
-
-// 🌟 Динамічний бейдж кількості товарів
-function updateCartBadge() {
-  fetch("cart_count.php")
-    .then((res) => res.text())
-    .then((count) => {
-      document.querySelectorAll("[data-cart-count]").forEach((el) => {
-        el.textContent = count;
-        el.style.display = count > 0 ? "inline-flex" : "none";
+  // 🌟 Бейдж кошика
+  function updateCartBadge() {
+    fetch("cart_count.php")
+      .then((res) => res.text())
+      .then((count) => {
+        document.querySelectorAll("[data-cart-count]").forEach((el) => {
+          el.textContent = count;
+          el.style.display = count > 0 ? "inline-flex" : "none";
+        });
       });
-    });
-}
-updateCartBadge();
+  }
+  updateCartBadge();
 
-// 🌟 Показати/сховати час доставки
-document.addEventListener("DOMContentLoaded", () => {
+  // 🌟 Показувати час доставки
   const delivery = document.querySelector("select[name='delivery']");
   const timeWrapper = document.getElementById("time-wrapper");
   const timeSelect = document.getElementById("delivery_time");
 
-  if (!delivery || !timeWrapper || !timeSelect) return;
-
-  function updateTimeVisibility() {
-    if (delivery.value === "courier") {
-      timeWrapper.style.display = "block";
-      timeSelect.required = true;
-    } else {
-      timeWrapper.style.display = "none";
-      timeSelect.required = false;
+  if (delivery && timeWrapper && timeSelect) {
+    function updateTimeVisibility() {
+      if (delivery.value === "courier") {
+        timeWrapper.style.display = "block";
+        timeSelect.required = true;
+      } else {
+        timeWrapper.style.display = "none";
+        timeSelect.required = false;
+      }
     }
+    delivery.addEventListener("change", updateTimeVisibility);
+    updateTimeVisibility();
   }
 
-  delivery.addEventListener("change", updateTimeVisibility);
-  updateTimeVisibility();
-});
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-add-to-cart]");
+    if (!btn) return;
 
-// 🌟 AJAX додавання в кошик (кнопки data-add-to-cart)
-document.addEventListener("click", (e) => {
-  if (!e.target.hasAttribute("data-add-to-cart")) return;
+    e.preventDefault();
 
-  const card = e.target.closest(".menu-item");
-  if (!card) return;
+    const id = btn.dataset.id;
+    const name = btn.dataset.name;
+    const price = btn.dataset.price;
 
-  const formData = new FormData();
-  formData.append("id", card.dataset.id);
-  formData.append("name", card.dataset.name);
-  formData.append("price", card.dataset.price);
+    if (!id || !name || !price) {
+      console.error("Немає даних товару!");
+      return;
+    }
 
-  fetch("add_to_cart.php", { method: "POST", body: formData }).then(() => {
-    updateCartBadge();
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("name", name);
+    formData.append("price", price);
+
+    fetch("add_to_cart.php", {
+      method: "POST",
+      body: formData,
+    }).then(() => {
+      updateCartBadge();
+      showToast(`Додано в кошик: ${name}`);
+    });
   });
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("theme-toggle");
-  if (!toggle) return;
 
-  // завантажити попередній вибір
-  const saved = localStorage.getItem("lateart_theme");
-  if (saved === "dark") {
-    document.body.classList.add("dark-theme");
+  // 🌟 Темна тема
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    const saved = localStorage.getItem("lateart_theme");
+    if (saved === "dark") {
+      document.body.classList.add("dark-theme");
+    }
+
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-theme");
+      localStorage.setItem(
+        "lateart_theme",
+        document.body.classList.contains("dark-theme") ? "dark" : "light"
+      );
+    });
   }
 
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-theme");
-    const mode = document.body.classList.contains("dark-theme")
-      ? "dark"
-      : "light";
-    localStorage.setItem("lateart_theme", mode);
-  });
+  // 🌟 Форма контактів — AJAX
+  const contactForm = document.getElementById("contactForm");
+
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let formData = new FormData(this);
+
+      fetch("save_message.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((r) => r.text())
+        .then((result) => {
+          if (result === "OK") {
+            showToast("Ваше повідомлення надіслано!");
+            contactForm.reset();
+          } else {
+            showToast("Помилка. Повідомлення порожнє.");
+          }
+        });
+    });
+  }
+
+  // 🌟 Авто-закриття toast
+  setTimeout(() => {
+    const t = document.getElementById("toast");
+    if (t) {
+      t.classList.remove("show");
+      setTimeout(() => (t.style.display = "none"), 400);
+    }
+  }, 3500);
 });
+
+// Виносимо showToast за межі, щоб працював скрізь
+function showToast(text) {
+  const toast = document.createElement("div");
+  toast.className = "toast show";
+  toast.innerHTML = `<p>${text}</p>`;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 400);
+  }, 3000);
+}

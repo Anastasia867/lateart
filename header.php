@@ -1,14 +1,17 @@
 <nav class="top-nav top-nav--pinned">
-    <div class="logo">LateArt<span>.</span></div>
+<a href="index.php" class="logo">LateArt<span>.</span></a>
 
     <button class="nav-toggle" aria-label="Відкрити меню">
         <span></span><span></span><span></span>
     </button>
 
     <ul class="nav-links">
-        <button id="theme-toggle" class="btn tertiary" style="padding:8px 14px;">
-  🌓 Тема
-</button>
+        <li>
+    <button id="theme-toggle" class="btn tertiary" style="padding:8px 14px;">
+        🌓 Тема
+    </button>
+</li>
+
 
         <li><a href="index.php#about">Про нас</a></li>
         <li><a href="menu.php">Меню</a></li>

@@ -7,7 +7,11 @@ $stmt = $pdo->prepare("SELECT * FROM orders WHERE id=?");
 $stmt->execute([$id]);
 $order = $stmt->fetch();
 
-$items = json_decode($order['cart_payload'], true);
+$items = json_decode($order['items'], true);
+
+foreach ($items as $i) {
+    echo $i["name"] . " x " . $i["quantity"] . "<br>";
+}
 ?>
 <!DOCTYPE html>
 <html>

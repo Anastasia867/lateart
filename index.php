@@ -1,4 +1,3 @@
-<?php include "header.php"; ?>
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -10,7 +9,23 @@
 
 <body class="home">
 
+<?php include "header.php"; ?>
+
+<?php if (!empty($_SESSION["contact_success"])): ?>
+<div class="toast show">
+    <p><?= $_SESSION["contact_success"] ?></p>
+</div>
+
+<script>
+setTimeout(() => {
+    document.querySelector(".toast")?.classList.remove("show");
+}, 3000);
+</script>
+
+<?php unset($_SESSION["contact_success"]); endif; ?>
+
 <header class="hero">
+
     <div class="hero-content">
         <h1>Кава з характером та історією</h1>
         <p>
@@ -77,12 +92,14 @@
                 <div class="menu-card-footer">
                     <span class="price">98 грн</span>
 
-                    <form action="add_to_cart.php" method="POST">
-                        <input type="hidden" name="id" value="1">
-                        <input type="hidden" name="name" value="Флет Вайт «Нічний Київ»">
-                        <input type="hidden" name="price" value="98">
-                        <button type="submit" class="btn tertiary">Замовити</button>
-                    </form>
+                    <button class="btn tertiary add-btn"
+        data-add-to-cart
+        data-id="11"
+        data-name="Флет Вайт «Нічний Київ»"
+        data-price="98">
+    Замовити
+</button>
+
                 </div>
             </div>
         </article>
@@ -98,12 +115,14 @@
                 <div class="menu-card-footer">
                     <span class="price">115 грн</span>
 
-                    <form action="add_to_cart.php" method="POST">
-                        <input type="hidden" name="id" value="2">
-                        <input type="hidden" name="name" value="Матча-латте">
-                        <input type="hidden" name="price" value="115">
-                        <button type="submit" class="btn tertiary">Замовити</button>
-                    </form>
+                    <button class="btn tertiary add-btn"
+        data-add-to-cart
+        data-id="12"
+        data-name="Матча-латте"
+        data-price="115">
+    Замовити
+</button>
+
                 </div>
             </div>
         </article>
@@ -118,12 +137,15 @@
                 <div class="menu-card-footer">
                     <span class="price">135 грн</span>
 
-                    <form action="add_to_cart.php" method="POST">
-                        <input type="hidden" name="id" value="3">
-                        <input type="hidden" name="name" value="Баскський чізкейк">
-                        <input type="hidden" name="price" value="135">
-                        <button type="submit" class="btn tertiary">Замовити</button>
-                    </form>
+                    <button class="btn tertiary add-btn"
+    data-add-to-cart
+    data-id="13"
+    data-name="Баскський чізкейк"
+    data-price="135">
+    Замовити
+</button>
+
+
                 </div>
             </div>
         </article>
@@ -147,7 +169,9 @@
             <p>Телефон: <a href="tel:+380508734156">+38 (050) 873-41-56</a></p>
         </div>
 
-        <form class="contact-form" action="order.php" method="POST">
+        <form id="contactForm" class="contact-form" method="POST" autocomplete="off">
+
+
             <div class="form-row">
                 <label for="name">Ім'я</label>
                 <input type="text" id="name" name="name" required>

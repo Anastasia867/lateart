@@ -1,29 +1,31 @@
-<?php include "header.php"; ?>
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Меню — LateArt Caffeine</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="menu">
-    <section class="menu-hero">
+
+<?php include "header.php"; ?>
+
+<section class="menu-hero">
   <h1>Меню LateArt Caffeine</h1>
   <p>Обирайте, комбінуйте та відкривайте нові поєднання смаків.</p>
   <a href="#coffee" class="btn primary">Зробити замовлення</a>
 </section>
 
+<main class="menu-page">
 
-    <main class="menu-page">
         <section id="coffee" class="menu-section">
             <div class="section-header">
                 <h2>Кавові напої</h2>
                 <p>Зерна обсмаження light та medium, авторські рецепти й альтернативні методи заварювання.</p>
             </div>
             <div class="menu-list">
-                <article class="menu-item" data-name="Еспресо «Single Origin»" data-price="58">
+                <article class="menu-item" data-id="1" data-name="Еспресо «Single Origin»" data-price="58">
                     <figure>
                         <img src="images/espresso_single_origin.png" alt="Еспресо Single Origin">
                     </figure>
@@ -33,10 +35,17 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">58 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+                        <button class="btn add-btn"
+    data-add-to-cart
+    data-id="1"
+    data-name="Еспресо «Single Origin»"
+    data-price="58">
+    Додати в кошик
+</button>
+
                     </div>
                 </article>
-                <article class="menu-item" data-name="Капучино з фісташкою" data-price="89">
+                <article class="menu-item" data-id="2" data-name="Капучино з фісташкою" data-price="89">
                     <figure>
                         <img src="images/kapuchino_fistashka.png" alt="Капучино з фісташкою">
                     </figure>
@@ -46,10 +55,16 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">89 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="2"
+    data-name="Капучино з фісташкою"
+    data-price="89">
+    Додати в кошик
+</button>
                     </div>
                 </article>
-                <article class="menu-item" data-name="Горіховий раф" data-price="105">
+                <article class="menu-item" data-id="3" data-name="Горіховий раф" data-price="105">
                     <figure>
                         <img src="images/raf.png" alt="Горіховий раф">
                     </figure>
@@ -59,10 +74,16 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">105 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="3"
+    data-name="Горіховий раф"
+    data-price="105">
+    Додати в кошик
+</button>
                     </div>
                 </article>
-                <article class="menu-item" data-name="Глясе" data-price="125">
+                <article class="menu-item" data-id="4" data-name="Глясе" data-price="125">
                     <figure>
                         <img src="images/glase.png" alt="Глясе">
                     </figure>
@@ -72,7 +93,13 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">125 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="4"
+    data-name="Глясе"
+    data-price="125">
+    Додати в кошик
+</button>
                     </div>
                 </article>
             </div>
@@ -84,7 +111,7 @@
                 <p>Готуємо цілий день, аби ви могли відчути енергію правильного харчування.</p>
             </div>
             <div class="menu-list">
-                <article class="menu-item" data-name="Аво-тост з лососем" data-price="168">
+                <article class="menu-item" data-id="5" data-name="Аво-тост з лососем" data-price="168">
                     <figure>
                         <img src="images/avo-tost.png" alt="Аво-тост з лососем">
                     </figure>
@@ -94,10 +121,16 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">168 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="5"
+    data-name="Аво-тост з лососем"
+    data-price="168">
+    Додати в кошик
+</button>
                     </div>
                 </article>
-                <article class="menu-item" data-name="Скрємбл з трюфе" data-price="152">
+                <article class="menu-item" data-id="6" data-name="Скрємбл з трюфе" data-price="152">
                     <figure>
                         <img src="images/scramble_truffle.png" alt="Скрємбл з трюфельною олією">
                     </figure>
@@ -107,10 +140,16 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">152 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="6"
+    data-name="Скрємбл з трюфельною олією"
+    data-price="152">
+    Додати в кошик
+</button>
                     </div>
                 </article>
-                <article class="menu-item" data-name="Смузі боул «Манго-Матча»" data-price="132">
+                <article class="menu-item" data-id="7" data-name="Смузі боул «Манго-Матча»" data-price="132">
                     <figure>
                         <img src="images/smoothie_bowl_mango_matcha.png" alt="Смузі боул Манго-Матча">
                     </figure>
@@ -120,7 +159,13 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">132 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="7"
+    data-name="Смузі боул «Манго-Матча»"
+    data-price="132">
+    Додати в кошик
+</button>
                     </div>
                 </article>
             </div>
@@ -132,7 +177,7 @@
                 <p>Щодня випікаємо свіжі десерти. Також можна оформити попереднє замовлення на торти.</p>
             </div>
             <div class="menu-list">
-                <article class="menu-item" data-name="Тарт «Солона карамель»" data-price="120">
+                <article class="menu-item" data-id="8" data-name="Тарт «Солона карамель»" data-price="120">
                     <figure>
                         <img src="images/tart_solana_karamel.png" alt="Тарт Солона карамель">
                     </figure>
@@ -142,10 +187,16 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">120 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="8"
+    data-name="Тарт «Солона карамель»"
+    data-price="120">
+    Додати в кошик
+</button>
                     </div>
                 </article>
-                <article class="menu-item" data-name="Мусовий торт чорничний" data-price="148">
+                <article class="menu-item" data-id="9" data-name="Мусовий торт чорничний" data-price="148">
                     <figure>
                         <img src="images/chornichnyi_tort.png" alt="Мусовий торт чорничний">
                     </figure>
@@ -155,10 +206,16 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">148 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="9"
+    data-name="Мусовий торт чорничний"
+    data-price="148">
+    Додати в кошик
+</button>
                     </div>
                 </article>
-                <article class="menu-item" data-name="Макарон сет 6 шт." data-price="210">
+                <article class="menu-item" data-id="10" data-name="Макарон сет 6 шт." data-price="210">
                     <figure>
                         <img src="images/makaron_set.png" alt="Макарон сет 6 шт.">
                     </figure>
@@ -168,7 +225,13 @@
                     </div>
                     <div class="menu-cta">
                         <span class="price">210 грн</span>
-                        <button class="btn add-btn" data-add-to-cart>Додати в кошик</button>
+<button class="btn add-btn"
+    data-add-to-cart
+    data-id="10"
+    data-name="Макарон сет 6 шт."
+    data-price="210">
+    Додати в кошик
+</button>
                     </div>
                 </article>
             </div>

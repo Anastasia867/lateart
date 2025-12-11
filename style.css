@@ -907,94 +907,194 @@ select:focus {
     align-self: flex-end;
   }
 }
-/* Кнопка кошика в світлій темі */
-.cart-link {
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
   background: linear-gradient(90deg, #6a4df1, #8b6df6);
-  color: #ffffff !important;
-  border-radius: 12px;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 600;
-}
-.cart-badge {
-  background: #ffffff;
-  color: #6a4df1;
-  font-weight: 700;
-  border-radius: 50%;
-  padding: 2px 7px;
-}
-/* Кнопка "Очистити кошик" */
-
-.clear-cart-btn:active {
-  transform: scale(0.97);
-}
-
-.clear-cart-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #ffffff;
-  color: #6a4df1;
-  border: 1px solid rgba(106, 77, 241, 0.3);
-
-  padding: 12px 20px;
+  color: #fff;
+  padding: 16px 22px;
   border-radius: 14px;
-  font-weight: 600;
-  cursor: pointer;
-
-  transition: 0.25s ease;
   font-size: 1rem;
+  font-weight: 600;
 
-  box-shadow: 0 6px 20px rgba(106, 77, 241, 0.15);
+  box-shadow: 0 6px 20px rgba(106, 77, 241, 0.3);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: 0.4s ease;
+  z-index: 9999;
 }
 
-.clear-cart-btn:hover {
-  background: #f7f4ff;
-  border-color: rgba(106, 77, 241, 0.5);
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.input-error {
+  border: 2px solid #e53935 !important;
+  background: #ffe6e6;
+}
+
+.input-success {
+  border: 2px solid #4caf50 !important;
+  background: #eaffea;
+}
+#submitBtn:disabled {
+  background: #b8b8c7 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-active {
+  background: linear-gradient(90deg, #6a4df1, #8b6df6) !important;
+  color: #fff !important;
+}
+.hint {
+  font-size: 13px;
+  margin-top: 4px;
+  color: #777;
+}
+
+.hint.error {
+  color: #d9534f;
+}
+
+.hint.success {
+  color: #4caf50;
+}
+/* НЕАКТИВНА кнопка оформлення */
+.btn.primary:disabled {
+  background: #bfbfbf !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  opacity: 0.7;
+}
+
+/* АКТИВНА кнопка оформлення */
+.btn.primary.enabled {
+  background: linear-gradient(90deg, #6a4df1, #8b6df6);
+  color: #fff !important;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(106, 77, 241, 0.25);
+}
+
+.btn.primary.enabled:hover {
+  background: linear-gradient(90deg, #5534d4, #6a4df1);
   transform: translateY(-2px);
 }
 
+/* Темна тема */
+body.dark-theme .btn.primary.enabled {
+  background: linear-gradient(90deg, #7a4df1, #9d72ff) !important;
+  color: white !important;
+}
+
+body.dark-theme .btn.primary.enabled:hover {
+  background: linear-gradient(90deg, #8b5cff, #b28cff) !important;
+}
+.nav-toggle {
+  z-index: 10000;
+  position: relative;
+}
 /* ===============================
-      2. ХЕДЕР
+      DARK THEME — FINAL VERSION
 =================================*/
+
 body.dark-theme {
   --bg: #0f0e17;
   --text: #f4f4fa;
   --muted: #9b9bb2;
   --card-bg: #1a1926;
-  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.12);
   --input-bg: #1f1e2d;
-  --input-border: rgba(255, 255, 255, 0.15);
+  --input-border: rgba(255, 255, 255, 0.22);
 }
-body.dark-theme .top-nav {
-  background: linear-gradient(90deg, #0f0b1f, #24175a, #412195);
-  color: #fff;
+
+/* --- 1. BODY + PAGE BACKGROUND --- */
+body.dark-theme main,
+body.dark-theme .section,
+body.dark-theme .hero {
+  background: linear-gradient(180deg, #0f0b1f, #1a1830);
+  color: var(--text);
+}
+
+/* --- 2. HEADER / NAVIGATION --- */
+body.dark-theme .top-nav,
+body.dark-theme .top-nav--pinned {
+  background: linear-gradient(90deg, #0f0b1f, #24175a, #412195) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* меню */
+body.dark-theme .nav-links {
+  background: #0f0b1f !important;
 }
 
 body.dark-theme .nav-links a {
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-
-body.dark-theme .nav-links a:hover {
   color: #ffffff !important;
 }
 
-/* ===============================
-      3. CART PAGE
-=================================*/
+/* бургер */
+body.dark-theme .nav-toggle span {
+  background-color: #ffffff !important;
+}
 
-body.dark-theme .cart-card {
+/* --- 3. CART BUTTON (КНОПКА КОШИКА) --- */
+body.dark-theme .cart-link {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+body.dark-theme .cart-badge {
+  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+  color: #000;
+}
+
+/* --- 4. MENU CARDS --- */
+body.dark-theme .menu-card,
+body.dark-theme .info-card,
+body.dark-theme .about-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   color: #ffffff;
 }
 
+body.dark-theme .menu-card p,
+body.dark-theme .info-card p,
+body.dark-theme .about-card p {
+  color: var(--muted);
+}
+
+body.dark-theme .menu-tag {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* --- 5. CONTACTS + FORMS --- */
+body.dark-theme .contact-card,
+body.dark-theme .contact-form {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: #ffffff;
+}
+
+/* --- 6. CART PAGE --- */
+body.dark-theme .cart-card,
 body.dark-theme .cart-summary {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
+  color: #ffffff;
 }
 
 body.dark-theme .cart-price,
@@ -1002,18 +1102,10 @@ body.dark-theme .cart-sum {
   color: var(--muted);
 }
 
-/* ===============================
-      4. ORDER PAGE
-=================================*/
-
-body.dark-theme .order-cart-block {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: #ffffff;
-}
-
+/* --- 7. ORDER PAGE --- */
+body.dark-theme .order-cart-block,
 body.dark-theme .order-item-card {
-  background: #242235;
+  background: var(--card-bg);
   border: 1px solid var(--card-border);
 }
 
@@ -1026,41 +1118,7 @@ body.dark-theme .order-item-sum {
   color: #d4c8ff;
 }
 
-/* ===============================
-      5. MENU CARDS
-=================================*/
-
-body.dark-theme .menu-card p {
-  color: var(--muted);
-}
-
-/* ===============================
-      6. CONTACT FORM
-=================================*/
-
-body.dark-theme .contact {
-  background: #151423;
-}
-
-body.dark-theme .contact-card,
-body.dark-theme .contact-form {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: #ffffff;
-}
-
-body.dark-theme input,
-body.dark-theme textarea,
-body.dark-theme select {
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  color: #ffffff;
-}
-
-/* ===============================
-      7. FOOTER
-=================================*/
-
+/* --- 8. FOOTER --- */
 body.dark-theme .footer {
   background: #08070f;
   color: rgba(255, 255, 255, 0.85);
@@ -1070,156 +1128,190 @@ body.dark-theme .footer a {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* ===============================
-      8. CART BUTTON
-=================================*/
-
-body.dark-theme .cart-link {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+/* --- 9. BUTTONS --- */
+body.dark-theme .btn.primary {
+  background: linear-gradient(90deg, #7a4df1, #9d72ff) !important;
   color: #fff !important;
 }
 
-body.dark-theme .cart-badge {
-  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
-  color: #000;
+body.dark-theme .btn.primary:hover {
+  background: linear-gradient(90deg, #8b5cff, #b28cff) !important;
 }
 
-/* ===============================
-      9. PAGE BACKGROUND
-=================================*/
-
-body.dark-theme main,
-body.dark-theme .section {
-  background: linear-gradient(
-    180deg,
-    rgba(122, 75, 255, 0.06),
-    rgba(255, 179, 71, 0.05)
-  );
-}
-
-/* ===============================
-      10. FIX BLACK TEXT
-=================================*/
-
-body.dark-theme h1,
-body.dark-theme h2,
-body.dark-theme h3,
-body.dark-theme p,
-body.dark-theme label {
-  color: #ffffff;
-}
-
-body.dark-theme .about-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: #ffffff;
-}
-
-body.dark-theme .about-card h3 {
-  color: #ffffff;
-}
-
-body.dark-theme .about-card p {
-  color: #d1cfff;
-}
-
-body.dark-theme .about {
-  background: linear-gradient(
-    180deg,
-    rgba(122, 75, 255, 0.05),
-    rgba(255, 179, 71, 0.05)
-  );
-}
-
-body.dark-theme .menu-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: #ffffff;
-}
-
-body.dark-theme .menu-card h3 {
-  color: #ffffff;
-}
-
-body.dark-theme .menu-card p {
-  color: #d1cfff;
-}
-
-body.dark-theme .menu-tag {
-  background: rgba(255, 255, 255, 0.12);
+body.dark-theme .btn.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #fff;
 }
 
-body.dark-theme .menu-card .price {
-  color: #f5f3ff;
-}
-
-/* ===============================
-   DARK THEME — MENU PAGE (menu.php)
-=================================*/
-
-body.dark-theme .menu-item {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  color: #fff;
-}
-
-body.dark-theme .menu-item h3 {
-  color: #fff;
-}
-
-body.dark-theme .menu-item p {
-  color: #cfcde9;
-}
-
-body.dark-theme .menu-item .price {
-  color: #f2eeff;
+/* --- 10. FIX cart-link для світлої теми --- */
+.cart-link {
+  color: #ffffff !important;
   font-weight: 600;
 }
 
-body.dark-theme .menu-item figure {
-  background: #1f1e2d;
+.cart-badge {
+  display: inline-flex;
+}
+/* === FIX: картки меню в темній темі === */
+body.dark-theme .menu-item {
+  background: #1e1d2b !important; /* темний фон */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-body.dark-theme .menu-item figure img {
-  opacity: 0.9;
+body.dark-theme .menu-item h3 {
+  color: #ffffff !important; /* заголовок */
 }
 
-body.dark-theme .menu-hero h1 {
-  color: #fff;
+body.dark-theme .menu-item p {
+  color: #d4d2f5 !important; /* опис */
 }
 
-body.dark-theme .menu-hero p {
-  color: #cfcde9;
+body.dark-theme .menu-item .price {
+  color: #fff9c9 !important; /* ціна */
 }
+/* === КНОПКА "ОЧИСТИТИ КОШИК" — УНІВЕРСАЛЬНИЙ СТИЛЬ === */
+.clear-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-body.dark-theme .menu-section .section-header h2 {
-  color: #fff;
-}
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
 
-body.dark-theme .menu-section .section-header p {
-  color: #cfcde9;
-}
-
-body.dark-theme .add-btn {
-  background: linear-gradient(90deg, #6a4df1, #412195);
-  color: #fff !important;
   border: none;
+  transition: 0.25s ease;
+  box-shadow: 0 6px 18px rgba(122, 75, 255, 0.25);
+
+  background: linear-gradient(90deg, #6a4df1, #8b6df6);
+  color: #ffffff;
 }
 
-body.dark-theme .add-btn:hover {
-  background: linear-gradient(90deg, #5534d4, #2e1570);
+.clear-cart-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
 }
 
+.clear-cart-btn:active {
+  transform: scale(0.97);
+}
+
+/* === ТЕМНА ТЕМА — ТА Ж КНОПКА, БЕЗ ЗМІН СТИЛЮ === */
 body.dark-theme .clear-cart-btn {
   background: linear-gradient(90deg, #7a4df1, #9d72ff);
   color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 20px rgba(122, 75, 255, 0.35);
+  box-shadow: 0 6px 20px rgba(122, 75, 255, 0.38);
 }
 
 body.dark-theme .clear-cart-btn:hover {
-  background: linear-gradient(90deg, #8b5cff, #b28cff);
-  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* === ТЕМНА ТЕМА: фон кошика та повідомлення про успішне замовлення === */
+body.dark-theme .cart-page,
+body.dark-theme .order-cart-block,
+body.dark-theme .empty-order-text,
+body.dark-theme .cart-empty-block {
+  background: #0f0b1f !important; /* глибоко-темний фон */
+  color: #ffffff !important;
+}
+
+/* Текст у блоках після оформлення */
+body.dark-theme .cart-empty-block p,
+body.dark-theme .empty-order-text {
+  color: #e7e3ff !important;
+}
+
+/* Картки у темі */
+body.dark-theme .cart-card {
+  background: #1a182c !important;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.dark-theme .order-total-box {
+  background: linear-gradient(90deg, #24175a, #412195) !important;
+  color: #fff !important;
+}
+
+/* === ТЕМНА ТЕМА ПІСЛЯ ОФОРМЛЕННЯ ЗАМОВЛЕННЯ === */
+body.dark-theme .highlighted,
+body.dark-theme .menu-page,
+body.dark-theme .order-page,
+body.dark-theme .section,
+body.dark-theme main {
+  background: #0f0b1f !important;
+  color: #ffffff !important;
+}
+
+/* Виправити тексти у highlighted */
+body.dark-theme .highlighted h2,
+body.dark-theme .highlighted p {
+  color: #ffffff !important;
+}
+
+/* Кнопка у highlighted */
+body.dark-theme .highlighted .btn {
+  background: linear-gradient(90deg, #7a4df1, #9d72ff) !important;
+  color: #fff !important;
+  border: none !important;
+}
+/* === БУРГЕР-МЕНЮ ПРАЦЮЄ У ТЕМНІЙ ТЕМІ === */
+@media (max-width: 960px) {
+  body.dark-theme .nav-links {
+    background: #0f0b1f !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+
+  body.dark-theme .nav-links a {
+    color: #ffffff !important;
+  }
+
+  body.dark-theme .nav-toggle span {
+    background-color: #ffffff !important;
+  }
+}
+.toast {
+  pointer-events: none; /* не блокує кліки */
+}
+.btn-delete {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-delete:hover {
+  background: #d93636;
+}
+/* === ФІОЛЕТОВЕ МЕНЮ В ТЕМНІЙ ТЕМІ === */
+body.dark-theme .top-nav {
+  background: linear-gradient(90deg, #1a104d, #2e1a78, #412195) !important;
+}
+
+/* Фон самого меню */
+body.dark-theme .nav-links {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 24px;
+}
+
+/* Колір тексту пунктів меню */
+body.dark-theme .nav-links a {
+  color: #ffffff !important;
+}
+
+/* Кошик */
+body.dark-theme .cart-link {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Бургер-іконка */
+body.dark-theme .nav-toggle span {
+  background: #ffffff !important;
 }
